@@ -12,6 +12,7 @@ public class EkartApplication {
 		System.out.println("from the master branch");
 		System.out.println("added the commment");
 		System.out.println("rennamed the master branch to the aman");
+		System.out.println("adedd from the newBranch branch");
 	}
 
 }
