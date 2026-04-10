@@ -8,6 +8,8 @@ public class EkartApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(EkartApplication.class, args);
+		
+		System.out.println("from the master branch");
 		System.out.println("added the commment");
 	}
 
