@@ -10,6 +10,7 @@ public class EkartApplication {
 		SpringApplication.run(EkartApplication.class, args);
 		
 		System.out.println("from the master branch");
+		System.out.println("added the commment");
 	}
 
 }
