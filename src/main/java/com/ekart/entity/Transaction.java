@@ -4,6 +4,10 @@ import java.time.LocalDateTime;
 
 import org.hibernate.resource.transaction.spi.TransactionStatus;
 
+import jakarta.persistence.Entity;
+
+
+
 public class Transaction {
    
 	
