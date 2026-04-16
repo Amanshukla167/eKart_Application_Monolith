@@ -1,0 +1,42 @@
+package com.ekart.DTO;
+
+import java.util.Set;
+
+import com.ekart.entity.CartProduct;
+
+public class CustomerCartDTO {
+   
+	
+	private Integer cartId;
+	
+	private String customerEmailId;
+	
+	private Set<CartProductDTO> cartProducts;
+	
+	public Integer getCartId() {
+		return cartId;
+	}
+	
+	public void setCartId(Integer cartId) {
+		this.cartId = cartId;
+	}
+	
+	public String getCustomerEmailId() {
+		return customerEmailId;
+	}
+	
+	public void setCustomerEmailId(String customerEmailId) {
+		this.customerEmailId = customerEmailId;
+	}
+	
+	public Set<CartProductDTO> getCartProducts() {
+		return cartProducts;
+	}
+	
+	public void setCartProducts(Set<CartProductDTO> cartProducts) {
+		this.cartProducts = cartProducts;
+	}
+	
+	
+	
+}
