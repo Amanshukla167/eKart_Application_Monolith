@@ -5,12 +5,20 @@ import java.time.LocalDateTime;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 
-
+@Entity
+@Table(name = "EK_TRANSACTION")
 public class Transaction {
    
-	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer trancationID;
 	
 	private Integer orderID;
@@ -20,7 +28,8 @@ public class Transaction {
 	private Double totalPrice;
 	
 	private LocalDateTime tractionDate;
-	 
+	
+	@Enumerated(EnumType.STRING)
 	private TransactionStatus  status;
 	
 	

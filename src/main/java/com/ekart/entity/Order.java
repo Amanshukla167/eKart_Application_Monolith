@@ -6,10 +6,24 @@ import java.util.List;
 import com.ekart.Enum.OrderStatus;
 import com.ekart.Enum.PaymentThrough;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "EK_ORDER")
 public class Order {
 
 	
-	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer orderId;
 	
 	private LocalDateTime dateOfOrder;
@@ -18,12 +32,16 @@ public class Order {
 	
 	private Double totalPrise;
 	
+	@Enumerated(EnumType.STRING)
 	private OrderStatus orderStatus;
 	
+	@Enumerated(EnumType.STRING)
 	private PaymentThrough paymentThrough;
 	
 	private LocalDateTime dateOfDelivery;
 	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "orderId")
 	private List<OrderedProduct> orderedProducts;
 	
 	private String deliveryAddress;
