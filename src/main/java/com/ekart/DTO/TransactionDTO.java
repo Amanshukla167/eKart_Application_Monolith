@@ -2,7 +2,7 @@ package com.ekart.DTO;
 
 import java.time.LocalDateTime;
 
-import org.hibernate.resource.transaction.spi.TransactionStatus;
+import com.ekart.Enum.TransactionStatus;
 
 import jakarta.validation.Valid;
 
