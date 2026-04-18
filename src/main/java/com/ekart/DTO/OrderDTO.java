@@ -3,10 +3,17 @@ package com.ekart.DTO;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class OrderDTO {
     
 	private Integer orderId;
 	
+	@NotBlank
+	@Email(message = "plese enter a valid email")
 	private String customerEmailId;
 	
 	private LocalDateTime dateOfOrder;
@@ -17,8 +24,11 @@ public class OrderDTO {
 	
 	private Double discount;
 	
+	@NotBlank(message = "please enter the payment through details")
 	private String paymentThrough;
 	
+	@NotNull(message = "the message field can not be null")
+	@Future
 	private LocalDateTime dateOfDelivery;
 	
 	private String deliveryAddress;

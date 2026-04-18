@@ -1,8 +1,13 @@
 package com.ekart.DTO;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
 public class CustomerCredDTO {
     
+	@Email(message = "Please provide a valid email")
 	private String email;
+	@NotBlank(message = "Please enter the password")
 	private String password;
 	
 	public String getEmail() {

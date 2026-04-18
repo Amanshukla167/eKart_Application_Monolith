@@ -2,12 +2,18 @@ package com.ekart.DTO;
 
 import java.util.Objects;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.PositiveOrZero;
+
 public class CartProductDTO {
    
 	private Integer cartProductId;
 	
+	@Valid
 	private ProductDTO product;
 	
+	
+	@PositiveOrZero(message = "the Quantity can not be in the zero")
 	private Integer quantity;
 
 	public Integer getCartProductId() {
