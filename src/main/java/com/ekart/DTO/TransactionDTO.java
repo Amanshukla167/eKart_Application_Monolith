@@ -4,13 +4,17 @@ import java.time.LocalDateTime;
 
 import org.hibernate.resource.transaction.spi.TransactionStatus;
 
+import jakarta.validation.Valid;
+
 public class TransactionDTO {
     
 	
 	private Integer transactionId;
 	
+	@Valid
 	private OrderDTO order;
 	
+	@Valid
 	private CardDTO card;
 	
 	private Double totalPrice;

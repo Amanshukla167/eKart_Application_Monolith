@@ -4,11 +4,17 @@ import java.util.Set;
 
 import com.ekart.entity.CartProduct;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+
 public class CustomerCartDTO {
    
 	
 	private Integer cartId;
 	
+	@NotBlank(message = "the email id cannot be null")
+	@Email(message = "please provide a valid email")
 	private String customerEmailId;
 	
 	private Set<CartProductDTO> cartProducts;

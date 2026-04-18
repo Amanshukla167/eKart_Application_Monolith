@@ -2,14 +2,21 @@ package com.ekart.DTO;
 
 import java.time.LocalDate;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class CardDTO {
 
+	
+	@NotBlank(message = "Card type can not be null")
 	private String cardType;
 	private String cardNumber;
 	private String nameOnCard;
 	private String hashCvv;
+	@NotNull(message = "Please enter the cvv of the card")
 	private Integer cvv;
 	private LocalDate expiryDate;
+	@NotNull(message = "Card id can not be null")
 	private Integer cardId;
 	private String customerEmailId;
 	

@@ -1,7 +1,12 @@
 package com.ekart.DTO;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
+
 public class ProductDTO {
     
+	
 	private Integer productId;
 	
 	private String name;
@@ -13,9 +18,11 @@ public class ProductDTO {
 	private String brand;
 	
 	private Double price;
-	
+	@Max(value = 99 ,message = "the discount can not be more than 100")
+	@Min(value = 10 , message = " the discount can not be less tha 10")
 	private Double discount;
 	
+	@Size(min = 3 , max = 10 , message = "PLease enter minimum 3 and mamximum 10")
 	private Integer quantity;
 	
 	private String errorMessage;
