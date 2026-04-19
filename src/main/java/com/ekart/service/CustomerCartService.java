@@ -10,7 +10,6 @@ public interface CustomerCartService {
     
 	Integer addProductToCart(CustomerCartDTO cartDTO) throws EKartException;
 	
-	
     Set<CartProductDTO>getProductsFromCart(String customerEmailId) throws EKartException;
 	
     void modifyQuantityOfProductInCart(String customerEmailId, Integer productId, Integer quantity)  throws EKartException;

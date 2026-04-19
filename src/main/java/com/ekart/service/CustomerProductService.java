@@ -1,5 +1,17 @@
 package com.ekart.service;
 
-public interface CustomerProductService {
+import java.util.List;
 
+import com.ekart.DTO.ProductDTO;
+import com.ekart.exception.EKartException;
+
+public interface CustomerProductService {
+   
+	
+	List<ProductDTO> getAllProducts() throws EKartException;
+
+	ProductDTO getProductById(Integer productId) throws EKartException;
+
+	void reduceAvailableQuantity(Integer productId, Integer quantity) throws EKartException;
+	
 }
