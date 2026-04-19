@@ -1,5 +1,11 @@
 package com.ekart.service;
 
-public interface CustomerCartService {
+import com.ekart.DTO.CustomerCartDTO;
+import com.ekart.exception.EKartException;
 
+public interface CustomerCartService {
+    
+	Integer addProductToCart(CustomerCartDTO cartDTO) throws EKartException;
+	
+	
 }
