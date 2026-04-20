@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,6 +57,17 @@ public class CartAPI {
 			cartServiceImpl.modifyQuantityOfProductInCart(customerEmailId, productId, quantity);
 			
 			String msg = "you item has been modified of the Product Id : " + productId ;
+			
+			return new ResponseEntity<String>(msg , HttpStatus.OK);
+		}
+		
+		@DeleteMapping(value = "delete/{customerEmailId}/product/{productId}")
+		public ResponseEntity<String>deleteProductFromCart(@NotNull @PathVariable String customerEmailId, @PathVariable Integer productId)throws EKartException{
+			
+			cartServiceImpl.deleteProductFromCart(customerEmailId, productId);
+			
+			
+			String msg = "your itmem have benn delated succesfully of product ID : " + productId;
 			
 			return new ResponseEntity<String>(msg , HttpStatus.OK);
 		}
