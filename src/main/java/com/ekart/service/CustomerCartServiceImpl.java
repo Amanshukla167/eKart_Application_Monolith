@@ -40,7 +40,7 @@ public class CustomerCartServiceImpl implements CustomerCartService{
 	Set<CartProduct>  cartProductsSet = new HashSet<CartProduct>();
 	Integer custId = null;
 	
-	      if(cartinRepo == null) {
+	      if(cartinRepo == null || cartinRepo.isEmpty()) {
 	    	  CustomerCart custEntityCart = new CustomerCart();
 	  		
 	  		custEntityCart.setCartId(cartDTO.getCartId());
