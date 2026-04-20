@@ -200,7 +200,7 @@ public class CustomerCartServiceImpl implements CustomerCartService{
 				  
 			  }
 			  
-			  cartRepository.save(custCart);
+			  cartRepository.delete(custCart);
 				
 	}
 	
@@ -223,6 +223,6 @@ public class CustomerCartServiceImpl implements CustomerCartService{
 		 
 		 custfromCart.removeAll(custfromCart);
 		 
-		 cartRepository.save(custCart);
+		 cartRepository.delete(custCart);
 	}
 }
