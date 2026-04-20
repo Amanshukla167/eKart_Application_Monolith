@@ -36,60 +36,70 @@ public class CustomerCartServiceImpl implements CustomerCartService{
 	@Override
 	public Integer addProductToCart(CustomerCartDTO cartDTO) throws EKartException {
 		
-		Integer cartId = null;
-		Set<CartProduct> Customercartproduct = new HashSet<CartProduct>();
+	List<CustomerCart> cartinRepo = cartRepository.findByCustomerEmailIdAndcartId(cartDTO.getCustomerEmailId(), cartDTO.getCartId());
+	Set<CartProduct>  cartProductsSet = new HashSet<CartProduct>();
+	Integer custId = null;
+	
+	      if(cartinRepo == null) {
+	    	  CustomerCart custEntityCart = new CustomerCart();
+	  		
+	  		custEntityCart.setCartId(cartDTO.getCartId());
+	  		custEntityCart.setCustomerEmailId(cartDTO.getCustomerEmailId());
+	  		
+	  		
+	  		
+	  		for(CartProductDTO cartProdDTO : cartDTO.getCartProducts()) {
+	  			
+	  			CartProduct cartProduct = new CartProduct();
+	  			
+	  			cartProduct.setCartProductId(cartProdDTO.getCartProductId());
+	  			
+	         	Optional<Product>	productrepo = 	productRepository.findById(cartProdDTO.getProduct().getProductId());
+	  			
+	         	Product productobjEntity = 	productrepo.orElseThrow(()-> new EKartException("this  product is not in the product cart"));
+	  			
+	  			cartProduct.setProductId(productobjEntity.getProducstId());
+	  			
+	  			cartProduct.setQuantity(cartProdDTO.getQuantity());
+	  			
+	  			cartProductsSet.add(cartProduct);
+	  			
+	  		}
+	  		
+	  		custEntityCart.setCartProducts(cartProductsSet);
+	  		
+	  		cartRepository.save(custEntityCart);
+	  		
+	  		custId = custEntityCart.getCartId();
+	  		
+	      } else {
+	    	  
+	    	  for ( CustomerCart cartineepo : cartinRepo ) {
+	    		  for(CartProductDTO cartproddto2 : cartDTO.getCartProducts() ) {
+	 	    		 
+	 	    		 CartProduct cartpod = new CartProduct();
+	 	    		 
+	 	    		 cartpod.setQuantity(cartproddto2.getQuantity());
+	 	    		 cartpod.setCartProductId(cartproddto2.getCartProductId());
+	 	    		 Optional<Product>	productrepo = 	productRepository.findById(cartproddto2.getProduct().getProductId());
+	 		  			
+	 		         Product productobjEntity = 	productrepo.orElseThrow(()-> new EKartException("this  product is not in the product cart"));
+	 	    		 
+	 	    		 cartpod.setProductId(productobjEntity.getProducstId());
+	 	    		 
+	 	    	   
+	 	    	     cartineepo.getCartProducts().add(cartpod);
+	 	    	 
+	 	    	 }
+	    		  custId = cartineepo.getCartId();
+	    		  cartRepository.save(cartineepo);
+	    	  }
+	    	 
+	    	
+	      }
 		
-		List<CustomerCart> cartInDatabase = cartRepository.findByCustomerEmailIdAndcartId(cartDTO.getCustomerEmailId(),cartDTO.getCartId());
-		
-		if(cartInDatabase == null) {
-			CustomerCart custEntity = new CustomerCart();
-			
-			
-			
-			custEntity.setCartId(cartDTO.getCartId());
-			custEntity.setCustomerEmailId(cartDTO.getCustomerEmailId());
-			  
-		     for(CartProductDTO cartdto : cartDTO.getCartProducts() ) {
-		    	 Optional<Product> prodt = productRepository.findById(cartdto.getProduct().getProductId());
-			    	
 				
-		    	 Product prodtEntity  = prodt.orElseThrow(() -> new EKartException("the product you are lookig for is not in the database"));
-		    	 CartProduct cartProdudtEntity = new CartProduct();
-		    	 
-		    	 cartProdudtEntity.setProductId(prodtEntity.getProducstId());
-		    	 cartProdudtEntity.setQuantity(cartdto.getQuantity());    
-		    	 Customercartproduct.add(cartProdudtEntity);
-		    	
-		     }
-			
-			custEntity.setCartProducts(Customercartproduct);
-			
-			cartRepository.save(custEntity);
-			
-			 cartId = custEntity.getCartId();;
-		}else {
-			
-			for(CustomerCart custCartEntity : cartInDatabase) {
-				
-				 for(CartProductDTO cartdto : cartDTO.getCartProducts() ) {
-			    	 Optional<Product> prodt = productRepository.findById(cartdto.getProduct().getProductId());
-				    	
-					
-			    	 Product prodtEntity  = prodt.orElseThrow(() -> new EKartException("the product you are lookig for is not in the database"));
-			    	 CartProduct cartProdudtEntity = new CartProduct();
-			    	 
-			    	 cartProdudtEntity.setProductId(prodtEntity.getProducstId());
-			    	 cartProdudtEntity.setQuantity(cartdto.getQuantity());    
-			    	 Customercartproduct.add(cartProdudtEntity);
-			    	
-			     }
-				
-			}
-		}
-		
-
-		
-		return cartId;
+		return custId;
 	}
 	
 	@Override
