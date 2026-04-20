@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface CustomerCartRepository extends CrudRepository<CustomerCart, Integer>{
 	
-   List<CustomerCart> findByCustomerEmailIdAndcartId(String customerEmailId , Integer cartId);
+ 
    
    List<CustomerCart> findByCustomerEmailId(String customerEmailId);
    

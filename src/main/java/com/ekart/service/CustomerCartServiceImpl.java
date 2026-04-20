@@ -36,7 +36,7 @@ public class CustomerCartServiceImpl implements CustomerCartService{
 	@Override
 	public Integer addProductToCart(CustomerCartDTO cartDTO) throws EKartException {
 		
-	List<CustomerCart> cartinRepo = cartRepository.findByCustomerEmailIdAndcartId(cartDTO.getCustomerEmailId(), cartDTO.getCartId());
+	List<CustomerCart> cartinRepo = cartRepository.findByCustomerEmailId(cartDTO.getCustomerEmailId());
 	Set<CartProduct>  cartProductsSet = new HashSet<CartProduct>();
 	Integer custId = null;
 	
@@ -109,7 +109,7 @@ public class CustomerCartServiceImpl implements CustomerCartService{
 	
 	Set<CartProductDTO> cartProductDetails = new HashSet<CartProductDTO>();
 	 
-	  if(custCart == null) {
+	  if(custCart == null ||  custCart.isEmpty()) {
 		  throw new EKartException("the cart is does not exist of this customer " +  customerEmailId);
 		  
 	  }
@@ -140,34 +140,89 @@ public class CustomerCartServiceImpl implements CustomerCartService{
 		     prodDto.setProductId(proditem.getProducstId());
 		     
 		     cartProductDTO.setProduct(prodDto);
+		     
 		     cartProductDetails.add(cartProductDTO);
-		  }
-	
-		  
+		  }	  
 	   }
-	     
-		
-		
 		
 		return cartProductDetails;
 	}
 	
 	@Override
-	public void modifyQuantityOfProductInCart(String customerEmailId, Integer productId, Integer quantity)
-			throws EKartException {
-		// TODO Auto-generated method stub
+	public void modifyQuantityOfProductInCart(String customerEmailId, Integer productId, Integer quantity)throws EKartException {
+		
+			List<CustomerCart>iteminCustCart = cartRepository.findByCustomerEmailId(customerEmailId);
+			
+			if(iteminCustCart == null || iteminCustCart.isEmpty()) {
+				throw new EKartException("the Cart is empty or either the cart not found");
+			}
+			
+			CustomerCart custCart = iteminCustCart.get(0);
+			
+			  Set<CartProduct> cartprod =  custCart.getCartProducts();
+			  
+			  for( CartProduct cartproduct : cartprod) {
+				  if(cartproduct.getProductId().equals(productId)) {
+					  Optional<Product>itemInProduct = productRepository.findById(productId);
+					   Product product = itemInProduct.orElseThrow(()-> new EKartException("the item not found in the card of product ID" + productId));
+					   
+					   cartproduct.setQuantity(quantity); 
+					   
+					   
+					   cartProductRepository.save(cartproduct);
+				  }
+			  }
 		
 	}
 	
 	@Override
 	public void deleteProductFromCart(String customerEmailId, Integer productId) throws EKartException {
-		// TODO Auto-generated method stub
 		
+			List<CustomerCart>iteminCart = cartRepository.findByCustomerEmailId(customerEmailId);
+			
+			if(iteminCart == null || iteminCart.isEmpty()) {
+				throw new EKartException("the cart is does not exit or the cart is empty");
+			}
+			
+			  CustomerCart custCart = iteminCart.get(0);
+			  
+			  Set<CartProduct> custfromCart  = custCart.getCartProducts();
+			  
+			  for(CartProduct cartprod :custfromCart ) {
+				  
+				  if(cartprod.getProductId().equals(productId)) {
+					  Optional<Product>itemInProduct = productRepository.findById(productId);
+					   Product product = itemInProduct.orElseThrow(()-> new EKartException("the item not found in the card of product ID" + productId));
+
+					 custfromCart.remove(product.getProducstId());
+					  break;
+				  }
+				  
+			  }
+			  
+			  cartRepository.save(custCart);
+				
 	}
 	
 	@Override
 	public void deleteAllProductsFromCart(String customerEmailId) throws EKartException {
-		// TODO Auto-generated method stub
+		List<CustomerCart>iteminCart = cartRepository.findByCustomerEmailId(customerEmailId);
 		
+		if(iteminCart == null || iteminCart.isEmpty()) {
+			throw new EKartException("the cart is does not exit or the cart is empty");
+		}
+		
+		 CustomerCart custCart = iteminCart.get(0);
+		
+		 Set<CartProduct> custfromCart  = custCart.getCartProducts();
+		
+		 if(custfromCart ==  null) {
+			 throw new EKartException("The Cart is empty can not be delteted");
+			
+		 }
+		 
+		 custfromCart.removeAll(custfromCart);
+		 
+		 cartRepository.save(custCart);
 	}
 }
