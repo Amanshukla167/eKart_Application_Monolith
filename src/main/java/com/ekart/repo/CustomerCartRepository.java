@@ -12,4 +12,6 @@ public interface CustomerCartRepository extends CrudRepository<CustomerCart, Int
 	
    List<CustomerCart> findByCustomerEmailIdAndcartId(String customerEmailId , Integer cartId);
    
+   List<CustomerCart> findByCustomerEmailId(String customerEmailId);
+   
 }

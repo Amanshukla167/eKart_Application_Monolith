@@ -104,8 +104,52 @@ public class CustomerCartServiceImpl implements CustomerCartService{
 	
 	@Override
 	public Set<CartProductDTO> getProductsFromCart(String customerEmailId) throws EKartException {
-		// TODO Auto-generated method stub
-		return null;
+		
+	List<CustomerCart> custCart = cartRepository.findByCustomerEmailId(customerEmailId);
+	
+	Set<CartProductDTO> cartProductDetails = new HashSet<CartProductDTO>();
+	 
+	  if(custCart == null) {
+		  throw new EKartException("the cart is does not exist of this customer " +  customerEmailId);
+		  
+	  }
+	  
+	  for(CustomerCart custcart2 : custCart ) {
+		   
+		Set<CartProduct> cartPod = custcart2.getCartProducts();
+		 
+		  for(CartProduct cartProduct : cartPod) {
+			  
+			  CartProductDTO cartProductDTO = new CartProductDTO();
+			  
+			  cartProductDTO.setCartProductId(cartProduct.getCartProductId());
+			  cartProductDTO.setQuantity(cartProduct.getQuantity());
+			  
+		     Optional<Product>	itemInPord = productRepository.findById(cartProduct.getProductId());
+		   
+		     Product proditem =  itemInPord.orElseThrow(()-> new EKartException("there is no product in this cart of this profuct ID" + cartProduct.getProductId()));
+		     
+		     ProductDTO prodDto = new ProductDTO();
+		     
+		     prodDto.setBrand(proditem.getBrand());
+		     prodDto.setCategory(proditem.getCategory());
+		     prodDto.setName(proditem.getName());
+		     prodDto.setPrice(proditem.getPrice());
+		     prodDto.setAvailableQuantity(proditem.getAvailableQuantity());
+		     prodDto.setDescription(proditem.getDescription());
+		     prodDto.setProductId(proditem.getProducstId());
+		     
+		     cartProductDTO.setProduct(prodDto);
+		     cartProductDetails.add(cartProductDTO);
+		  }
+	
+		  
+	   }
+	     
+		
+		
+		
+		return cartProductDetails;
 	}
 	
 	@Override
