@@ -74,7 +74,12 @@ public class CustomerCartServiceImpl implements CustomerCartService{
 	  		
 	      } else {
 	    	  
-	    	  for ( CustomerCart cartineepo : cartinRepo ) {
+	    	 
+	    	  
+	    	   CustomerCart custcart =  cartinRepo.get(0); 
+	    	   
+	    	   Set<CartProduct>  cartProductsSet2 = custcart.getCartProducts();
+	    	  
 	    		  for(CartProductDTO cartproddto2 : cartDTO.getCartProducts() ) {
 	 	    		 
 	 	    		 CartProduct cartpod = new CartProduct();
@@ -86,19 +91,14 @@ public class CustomerCartServiceImpl implements CustomerCartService{
 	 		         Product productobjEntity = 	productrepo.orElseThrow(()-> new EKartException("this  product is not in the product cart"));
 	 	    		 
 	 	    		 cartpod.setProductId(productobjEntity.getProducstId());
-	 	    		 
-	 	    	   
-	 	    	     cartineepo.getCartProducts().add(cartpod);
-	 	    	 
+	 	    		  
+	 	    		cartProductsSet2.add(cartpod);
+	 	    	     custcart.setCartProducts(cartProductsSet2);
+//	 	    	      custcart.getCartProducts().add(cartpod);
+	 	    	      cartRepository.save(custcart);
 	 	    	 }
-	    		  custId = cartineepo.getCartId();
-	    		  cartRepository.save(cartineepo);
-	    	  }
-	    	 
-	    	
-	      }
-		
-				
+	    		  custId = custcart.getCartId();
+	    	}
 		return custId;
 	}
 	
@@ -191,16 +191,14 @@ public class CustomerCartServiceImpl implements CustomerCartService{
 			  for(CartProduct cartprod :custfromCart ) {
 				  
 				  if(cartprod.getProductId().equals(productId)) {
-					  Optional<Product>itemInProduct = productRepository.findById(productId);
-					   Product product = itemInProduct.orElseThrow(()-> new EKartException("the item not found in the card of product ID" + productId));
-
-					 custfromCart.remove(product.getProducstId());
-					  break;
+					  
+                        	 custfromCart.remove(cartprod);
+        					 cartProductRepository.delete((CartProduct)cartprod);
+        					 cartRepository.save(custCart);
+        					 return;
 				  }
 				  
 			  }
-			  
-			  cartRepository.delete(custCart);
 				
 	}
 	
@@ -216,13 +214,18 @@ public class CustomerCartServiceImpl implements CustomerCartService{
 		
 		 Set<CartProduct> custfromCart  = custCart.getCartProducts();
 		
-		 if(custfromCart ==  null) {
+		 if(custfromCart ==  null || custfromCart.isEmpty()) {
 			 throw new EKartException("The Cart is empty can not be delteted");
 			
 		 }
 		 
+		 
+		 
 		 custfromCart.removeAll(custfromCart);
 		 
-		 cartRepository.delete(custCart);
+		 cartProductRepository.deleteAll(custfromCart);
+		 cartRepository.save(custCart);
+		 
+		
 	}
 }
