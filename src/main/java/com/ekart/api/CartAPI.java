@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ekart.DTO.CartProductDTO;
 import com.ekart.DTO.CustomerCartDTO;
 import com.ekart.exception.EKartException;
+import com.ekart.service.CustomerCartService;
 import com.ekart.service.CustomerCartServiceImpl;
 
 import jakarta.validation.Valid;
@@ -30,7 +31,7 @@ public class CartAPI {
 
 	
 		@Autowired
-		private CustomerCartServiceImpl cartServiceImpl;
+		private CustomerCartService cartServiceImpl;
 		
 		@PostMapping(value = "/addProductCart")
 		ResponseEntity<String>addProductToCart(@Valid @RequestBody CustomerCartDTO cartDTO) throws EKartException{
@@ -39,7 +40,7 @@ public class CartAPI {
 			
 			
 			String msg = "product added to the cart successfulyy , Your cart Id is : " + custId;
-			return new ResponseEntity<String>(msg , HttpStatus.OK);
+			return new ResponseEntity<String>(msg , HttpStatus.CREATED);
 		}
 		
 		@GetMapping(value = "/product/{customerEmailId}")
@@ -50,7 +51,7 @@ public class CartAPI {
 			return new ResponseEntity<Set<CartProductDTO>>(cartprodut , HttpStatus.OK);
 		}
 		
-		@PutMapping(value = "cart/{customerEmailId}/product/{productId}")
+		@PutMapping(value = "/cart/{customerEmailId}/product/{productId}")
 		public ResponseEntity<String>modifyQuantityOfProductInCart ( @PathVariable String customerEmailId,
 				 @NotNull  @PathVariable Integer productId, @RequestBody Integer quantity)throws EKartException{
 			
@@ -61,7 +62,7 @@ public class CartAPI {
 			return new ResponseEntity<String>(msg , HttpStatus.OK);
 		}
 		
-		@DeleteMapping(value = "delete/{customerEmailId}/product/{productId}")
+		@DeleteMapping(value = "/delete/{customerEmailId}/product/{productId}")
 		public ResponseEntity<String>deleteProductFromCart(@NotNull @PathVariable String customerEmailId, @PathVariable Integer productId)throws EKartException{
 			
 			cartServiceImpl.deleteProductFromCart(customerEmailId, productId);
@@ -71,5 +72,16 @@ public class CartAPI {
 			
 			return new ResponseEntity<String>(msg , HttpStatus.OK);
 		}
+		
+		@DeleteMapping(value = "/deleteall/{customerEmailId}")
+		public ResponseEntity<String>deleteAllProductsFromCart(@Email @PathVariable String customerEmailId)throws EKartException{
+			
+			cartServiceImpl.deleteAllProductsFromCart(customerEmailId);
+			
+			String msg = "your cart hasbeen deleted sucesfulyy !!! ";
+			return new ResponseEntity<String>(msg, HttpStatus.OK);
+		}
+		
+		
 		
 }
