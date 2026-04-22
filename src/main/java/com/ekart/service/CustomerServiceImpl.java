@@ -20,8 +20,24 @@ public class CustomerServiceImpl implements CustomerService {
 	
 		@Override
 		public CustomerDTO authenticateCustomer(String emailId, String password) throws EKartException {
-		// TODO Auto-generated method stub
-		return null;
+		 Optional<Customer> foundItem = customerRepository.findById(emailId);
+		 
+		 CustomerDTO customerDTO = new CustomerDTO();
+		 
+		 Customer customerobj = foundItem.orElseThrow(() -> new EKartException("the Customer Dose not exist of by Email id, please try with diffrent one"));
+		   
+				 if(customerobj.getPassword().equals(password)){
+					 
+					 customerDTO.setName(customerobj.getName());
+					 customerDTO.setEmailId(customerobj.getEmailId());
+					 customerDTO.setPhoneNumber(customerobj.getPhoneNumber());
+					 customerDTO.setAddress(customerobj.getAddress());
+					 
+				 }else {
+					 throw new EKartException("Pleae Emter the correct password");
+				 }
+				 
+		return customerDTO;
 		}
 		
 		
@@ -75,15 +91,34 @@ public class CustomerServiceImpl implements CustomerService {
 	  	
 	  	@Override
 	  	public void deleteShippingAddress(String customerEmailId) throws EKartException {
-	  	// TODO Auto-generated method stub
+	  	
+	  		
+	  	Optional<Customer> custIdfound	= customerRepository.findById(customerEmailId);
+	  	
+    	Customer custObj = custIdfound.orElseThrow(()-> new EKartException("The address does not exit of this Emailid"));
+    	
+    	custObj.setAddress(null);
+    	
+    	customerRepository.save(custObj);
 	  	
 	  	}
 	  	
 	  	
 	  	@Override
 	  	public CustomerDTO getCustomerByEmailId(String emailId) throws EKartException {
-	  	// TODO Auto-generated method stub
-	  	return null;
+	  	   
+	  	Optional<Customer> foundobj = customerRepository.findById(emailId);
+	  	
+	  	Customer custobj = foundobj.orElseThrow(()-> new EKartException("The Customer Does Not exist, please try with diffrent ID"));
+	  		
+	  	CustomerDTO customerDTO = new CustomerDTO();
+	  	
+	  	customerDTO.setName(custobj.getName());
+	  	customerDTO.setEmailId(custobj.getEmailId());
+	  	customerDTO.setAddress(custobj.getAddress());
+	  	customerDTO.setPhoneNumber(custobj.getPhoneNumber());
+	  		
+	  	return customerDTO;
 	  	}
 	  	
 	  	
