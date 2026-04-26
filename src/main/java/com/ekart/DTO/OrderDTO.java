@@ -60,6 +60,7 @@ public class OrderDTO {
 	}
 
 	public Double getTotalPrice() {
+			
 		return totalPrice;
 	}
 
