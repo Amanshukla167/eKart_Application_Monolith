@@ -30,6 +30,8 @@ public class Order {
 	
 	private Double discount;
 	
+	private String customerEmaiId;
+	
 	private Double totalPrise;
 	
 	@Enumerated(EnumType.STRING)
@@ -118,6 +120,14 @@ public class Order {
 
 	public void setDeliveryAddress(String deliveryAddress) {
 		this.deliveryAddress = deliveryAddress;
+	}
+
+	public String getCustomerEmaiId() {
+		return customerEmaiId;
+	}
+
+	public void setCustomerEmaiId(String customerEmaiId) {
+		this.customerEmaiId = customerEmaiId;
 	}
 	
 	

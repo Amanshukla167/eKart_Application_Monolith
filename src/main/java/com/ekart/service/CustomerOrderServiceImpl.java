@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.ekart.DTO.CustomerDTO;
 import com.ekart.DTO.OrderDTO;
 import com.ekart.DTO.OrderedProductDTO;
+import com.ekart.DTO.ProductDTO;
 import com.ekart.Enum.OrderStatus;
 import com.ekart.Enum.PaymentThrough;
 import com.ekart.entity.Order;
@@ -17,6 +18,7 @@ import com.ekart.entity.OrderedProduct;
 import com.ekart.entity.Product;
 import com.ekart.exception.EKartException;
 import com.ekart.repo.CustomerOrderRepository;
+import com.ekart.repo.CustomerOrderedProduct;
 import com.ekart.repo.ProductRepository;
 
 import jakarta.transaction.Transactional;
@@ -34,6 +36,10 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 	        
 	        @Autowired
 	        private ProductRepository productRepository;
+	        
+	        
+	        @Autowired
+	        private CustomerOrderedProduct customerOrderedProduct;
 			
 			
 			@Override
@@ -108,27 +114,169 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 			
 			@Override
 			public OrderDTO getOrderDetails(Integer orderId) throws EKartException {
-				// TODO Auto-generated method stub
-				return null;
+				
+				
+				  Optional<Order> orderObj = customerOrderRepository.findById(orderId);
+				  
+			      Order order = orderObj.orElseThrow(()-> new EKartException("this Order is not avalible, please try again"));
+			      
+			      OrderDTO dto = new OrderDTO();
+			      
+			      dto.setOrderId(order.getOrderId());
+			      dto.setOrderStatus(order.getOrderStatus().toString().toUpperCase());
+			      dto.setCustomerEmailId(order.getCustomerEmaiId());
+			      dto.setDateOfOrder(order.getDateOfOrder());
+			      dto.setDateOfDelivery(order.getDateOfDelivery());
+			      dto.setDeliveryAddress(order.getDeliveryAddress());
+			      dto.setTotalPrice(order.getTotalPrise());
+			      dto.setPaymentThrough(order.getPaymentThrough().toString().toUpperCase());
+			      
+			      
+			      List<OrderedProduct> orderList = order.getOrderedProducts();
+			      
+			      if(orderList.isEmpty()) {
+			    	  throw new EKartException("there is no order histroy avalilbel in the orderted Itme");
+			    	  
+			      }
+			      
+			     
+			      List<OrderedProductDTO> orderedProductDTOList = new ArrayList<OrderedProductDTO>();
+			      for( OrderedProduct orderedProduct : orderList) {
+			    	
+			    	
+			    	  OrderedProductDTO orderedProductDTO = new OrderedProductDTO();
+			    	  
+			    	  orderedProductDTO.setQuantity(orderedProduct.getQuantity());
+			    	  orderedProductDTO.setOrderedProductId(orderedProduct.getOrderedProductId());
+			    	  
+			    	  Optional<Product>foundProduct = productRepository.findById(orderedProduct.getProductId());
+		     	        
+					   Product product = foundProduct.orElseThrow(()-> new EKartException("product not found please use the diffrent product"));
+					    
+					   ProductDTO productDTO = new ProductDTO();
+					   
+					   productDTO.setName(product.getName());
+					   productDTO.setBrand(product.getBrand());
+					   productDTO.setCategory(product.getCategory());
+					   productDTO.setDescription(product.getDescription());
+					   productDTO.setPrice(product.getPrice());
+					   
+			    	  
+			    	  
+			    	  orderedProductDTO.setProduct(productDTO);
+					   
+			    	  orderedProductDTOList.add(orderedProductDTO);
+					  
+			      }
+			      
+			      dto.setOrderedProducts(orderedProductDTOList);
+			      
+				    
+				return dto;
 			}
 			
 			
 			@Override
 			public List<OrderDTO> findOrdersByCustomerEmailId(String emailId) throws EKartException {
-				// TODO Auto-generated method stub
-				return null;
+			    
+		         List<Order> orderObj = customerOrderRepository.findByCustomerEmaiId(emailId);
+		         
+		         if(orderObj.isEmpty() || orderObj == null) {
+		        	 throw new EKartException("costomer does not exist");
+		         }
+		         
+		         List<OrderDTO> orderDTOList = new ArrayList<OrderDTO>();
+		         
+		         for(Order order : orderObj) {
+			        	
+		        	 OrderDTO orderDTO = new OrderDTO();
+		        	 
+		        	 orderDTO.setOrderId(order.getOrderId());
+		        	 orderDTO.setOrderStatus(order.getOrderStatus().toString().toUpperCase());
+		        	 orderDTO.setCustomerEmailId(order.getCustomerEmaiId());
+		        	 orderDTO.setDateOfOrder(order.getDateOfOrder());
+		        	 orderDTO.setDateOfDelivery(order.getDateOfDelivery());
+		        	 orderDTO.setDeliveryAddress(order.getDeliveryAddress());
+		        	 orderDTO.setTotalPrice(order.getTotalPrise());
+		        	 orderDTO.setPaymentThrough(order.getPaymentThrough().toString().toUpperCase());
+				      
+				      
+				      List<OrderedProduct> orderList = order.getOrderedProducts();
+				      
+				      if( orderList == null || orderList.isEmpty() ) {
+				    	  throw new EKartException("there is no order histroy avalilbel in the orderted Itme");
+				    	  
+				      }
+				      
+				     
+				      List<OrderedProductDTO> orderedProductDTOList = new ArrayList<OrderedProductDTO>();
+				      for( OrderedProduct orderedProduct : orderList) {
+				    	
+				    	
+				    	  OrderedProductDTO orderedProductDTO = new OrderedProductDTO();
+				    	  
+				    	  orderedProductDTO.setQuantity(orderedProduct.getQuantity());
+				    	  orderedProductDTO.setOrderedProductId(orderedProduct.getOrderedProductId());
+				    	  
+				    	  Optional<Product>foundProduct = productRepository.findById(orderedProduct.getProductId());
+			     	        
+						   Product product = foundProduct.orElseThrow(()-> new EKartException("product not found please use the diffrent product"));
+						    
+						   
+						
+						   
+						   ProductDTO productDTO = new ProductDTO();
+						   
+						   productDTO.setName(product.getName());
+						   productDTO.setBrand(product.getBrand());
+						   productDTO.setCategory(product.getCategory());
+						   productDTO.setDescription(product.getDescription());
+						   productDTO.setPrice(product.getPrice());
+						   
+				    	  
+				    	  
+				    	  orderedProductDTO.setProduct(productDTO);
+						   
+				    	  orderedProductDTOList.add(orderedProductDTO);
+						  
+				      }
+				      
+				      orderDTO.setOrderedProducts(orderedProductDTOList);
+				      
+				      orderDTOList.add(orderDTO);
+			        	
+			        }
+		          
+				
+				return orderDTOList;
 			}
 			
 			
 			@Override
 			public void updateOrderStatus(Integer orderId, OrderStatus orderStatus) throws EKartException {
-				// TODO Auto-generated method stub
+		
+				
+                  Optional<Order> orderObj = customerOrderRepository.findById(orderId);
+				  
+			      Order order = orderObj.orElseThrow(()-> new EKartException("this Order is not avalible, please try again"));
+			      
+			      order.setOrderStatus(orderStatus);
+			      
+			      customerOrderRepository.save(order);
+				
 				
 			}
 			
 			@Override
 			public void updatePaymentThrough(Integer orderId, PaymentThrough paymentThrough) throws EKartException {
-				// TODO Auto-generated method stub
+				
+				 Optional<Order> orderObj = customerOrderRepository.findById(orderId);
+				  
+			      Order order = orderObj.orElseThrow(()-> new EKartException("this Order is not avalible, please try again"));
+			      
+			      order.setPaymentThrough(paymentThrough); 
+			      
+			      customerOrderRepository.save(order);
 				
 			}
 	
