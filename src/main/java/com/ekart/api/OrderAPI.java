@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.ekart.DTO.OrderDTO;
 import com.ekart.Enum.OrderStatus;
@@ -30,9 +31,14 @@ public class OrderAPI {
 	 @Autowired
 	 private CustomerOrderService customerOrderService;
 	 
+	 @Autowired
+	 private RestTemplate restTemplate;
+	 
 	 
 	 @PostMapping(value = "/placeOrder")
 	 public ResponseEntity<String>Plaaceoder( @RequestBody @Valid OrderDTO orderDTO)throws EKartException{
+		 
+		  
 		 
 	      Integer orderId = customerOrderService.placeOrder(orderDTO);
 		 
@@ -74,6 +80,7 @@ public class OrderAPI {
 		 
 	 }
 	 
+	 @PutMapping(value = "/ordetPaymentUpdate/{orderId}")
 	 public ResponseEntity<String>updatePaymentThrough(@PathVariable Integer orderId, @RequestBody PaymentThrough paymentThrough) 
 			 throws EKartException {
 		 

@@ -7,6 +7,7 @@ import com.ekart.Enum.OrderStatus;
 import com.ekart.Enum.PaymentThrough;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -30,8 +31,10 @@ public class Order {
 	
 	private Double discount;
 	
+	@Column(name = "customer_email_id")
 	private String customerEmaiId;
 	
+	@Column(name = "total_price")
 	private Double totalPrise;
 	
 	@Enumerated(EnumType.STRING)
