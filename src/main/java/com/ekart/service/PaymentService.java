@@ -23,7 +23,7 @@ public interface PaymentService {
 
 	TransactionDTO authenticatePayment(String customerEmailId, TransactionDTO transactionDTO) throws EKartException, NoSuchAlgorithmException;
 
-	List<CardDTO> getCardsOfCustomer(String customerEmailId, String cardType) throws EKartException;
+	List<CardDTO> getCardsOfCustomer(String customerEmailId) throws EKartException;
 
 	
 }

@@ -11,5 +11,5 @@ import java.util.List;
 @Repository
 public interface CardRepository extends CrudRepository<Card, Integer> {
 
-
+       List<Card> findByCustomerEmailId(String customerEmailId);
 }
