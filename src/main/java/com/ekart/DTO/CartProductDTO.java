@@ -12,6 +12,10 @@ public class CartProductDTO {
 	@Valid
 	private ProductDTO product;
 	
+	private Integer productID;
+	
+	
+	
 	
 	@PositiveOrZero(message = "the Quantity can not be in the zero")
 	private Integer quantity;
@@ -62,6 +66,14 @@ public class CartProductDTO {
 	public int hashCode() {
 		// TODO Auto-generated method stub
 		return Objects.hash(this.getCartProductId());
+	}
+
+	public Integer getProductID() {
+		return productID;
+	}
+
+	public void setProductID(Integer productID) {
+		this.productID = productID;
 	}
 	
 	

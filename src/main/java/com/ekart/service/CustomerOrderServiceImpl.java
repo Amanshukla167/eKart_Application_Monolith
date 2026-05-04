@@ -181,7 +181,7 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 			    
 		         List<Order> orderObj = customerOrderRepository.findByCustomerEmaiId(emailId);
 		         
-		         if(orderObj.isEmpty() || orderObj == null) {
+		         if( orderObj == null || orderObj.isEmpty() ) {
 		        	 throw new EKartException("costomer does not exist");
 		         }
 		         

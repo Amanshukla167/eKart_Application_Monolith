@@ -43,7 +43,7 @@ public class CustomerCartServiceImpl implements CustomerCartService{
 	      if(cartinRepo == null || cartinRepo.isEmpty()) {
 	    	  CustomerCart custEntityCart = new CustomerCart();
 	  		
-	  		custEntityCart.setCartId(cartDTO.getCartId());
+//	  		custEntityCart.setCartId(cartDTO.getCartId());
 	  		custEntityCart.setCustomerEmailId(cartDTO.getCustomerEmailId());
 	  		
 	  		
@@ -52,9 +52,9 @@ public class CustomerCartServiceImpl implements CustomerCartService{
 	  			
 	  			CartProduct cartProduct = new CartProduct();
 	  			
-	  			cartProduct.setCartProductId(cartProdDTO.getCartProductId());
+//	  			cartProduct.setCartProductId(cartProdDTO.getCartProductId());
 	  			
-	         	Optional<Product>	productrepo = 	productRepository.findById(cartProdDTO.getProduct().getProductId());
+	         	Optional<Product>	productrepo = 	productRepository.findById(cartProdDTO.getProductID());
 	  			
 	         	Product productobjEntity = 	productrepo.orElseThrow(()-> new EKartException("this  product is not in the product cart"));
 	  			

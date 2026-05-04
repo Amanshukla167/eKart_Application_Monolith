@@ -97,7 +97,11 @@ class PaymentServiceImpl implements PaymentService {
 	    	 
 	          List<Card> cardobj = cardRepository.findByCustomerEmailId(customerEmailId);
 			     
-			     for(Card card :cardobj ) {
+			    if(cardobj == null || cardobj.isEmpty()) {
+			    	throw new EKartException("there is no customer is availble ny this ID ");
+			    }
+			    
+			    for(Card card :cardobj ) {
 			    	 if(card.getCardID().equals(cardId)) {
 			    		 cardRepository.delete(card);
 			    		break;
