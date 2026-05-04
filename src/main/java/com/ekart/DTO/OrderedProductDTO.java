@@ -4,9 +4,14 @@ public class OrderedProductDTO {
    
 	private Integer orderedProductId;
 	
+	private Integer productId;
+	
 	private ProductDTO product;
 	
 	private Integer quantity;
+	
+	
+	
 
 	public Integer getOrderedProductId() {
 		return orderedProductId;
@@ -30,6 +35,14 @@ public class OrderedProductDTO {
 
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
+	}
+
+	public Integer getProductId() {
+		return productId;
+	}
+
+	public void setProductId(Integer productId) {
+		this.productId = productId;
 	}
 	
 	
