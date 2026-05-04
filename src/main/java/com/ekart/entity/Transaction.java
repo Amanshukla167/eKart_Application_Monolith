@@ -2,8 +2,9 @@ package com.ekart.entity;
 
 import java.time.LocalDateTime;
 
-import org.hibernate.resource.transaction.spi.TransactionStatus;
+import com.ekart.Enum.TransactionStatus;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -21,14 +22,19 @@ public class Transaction {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer trancationID;
 	
+	@Column(name = "ORDER_ID")
 	private Integer orderID;
 	
+	@Column(name = "CARD_ID")
 	private Integer cardId;
 	
+	@Column(name = "TOTAL_PRICE")
 	private Double totalPrice;
 	
+	@Column(name = "TRANSACTION_DATE")
 	private LocalDateTime tractionDate;
 	
+	@Column(name = "TRANSACTION_STATUS")
 	@Enumerated(EnumType.STRING)
 	private TransactionStatus  status;
 	
