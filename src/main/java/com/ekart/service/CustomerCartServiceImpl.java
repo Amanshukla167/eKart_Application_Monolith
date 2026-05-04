@@ -54,7 +54,7 @@ public class CustomerCartServiceImpl implements CustomerCartService{
 	  			
 //	  			cartProduct.setCartProductId(cartProdDTO.getCartProductId());
 	  			
-	         	Optional<Product>	productrepo = 	productRepository.findById(cartProdDTO.getProductID());
+	         	Optional<Product>	productrepo = 	productRepository.findById(cartProdDTO.getProductId());
 	  			
 	         	Product productobjEntity = 	productrepo.orElseThrow(()-> new EKartException("this  product is not in the product cart"));
 	  			
@@ -85,8 +85,8 @@ public class CustomerCartServiceImpl implements CustomerCartService{
 	 	    		 CartProduct cartpod = new CartProduct();
 	 	    		 
 	 	    		 cartpod.setQuantity(cartproddto2.getQuantity());
-	 	    		 cartpod.setCartProductId(cartproddto2.getCartProductId());
-	 	    		 Optional<Product>	productrepo = 	productRepository.findById(cartproddto2.getProduct().getProductId());
+//	 	    		 cartpod.setCartProductId(cartproddto2.getCartProductId());
+	 	    		 Optional<Product>	productrepo = 	productRepository.findById(cartproddto2.getProductId());
 	 		  			
 	 		         Product productobjEntity = 	productrepo.orElseThrow(()-> new EKartException("this  product is not in the product cart"));
 	 	    		 

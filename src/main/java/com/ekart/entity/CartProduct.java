@@ -50,24 +50,16 @@ public class CartProduct {
 	
 	@Override
 	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub
-//		return super.equals(obj);
-		
 		if(this == obj) return true;
 		
 		if(obj == null || this.getClass()!= obj.getClass())return false;
 		
 		CartProduct otherobj = (CartProduct)obj;
-		
-		if(this.getProductId().equals(otherobj.getCartProductId())) {
-			return true;
-		}
-		return false;
+		return Objects.equals(this.getProductId(), otherobj.getProductId());
 	}
 	
 	@Override
 	public int hashCode() {
-		// TODO Auto-generated method stub
 		return Objects.hashCode(this.getProductId());
 	}
 	

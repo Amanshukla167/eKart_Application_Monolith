@@ -3,6 +3,7 @@ package com.ekart.DTO;
 import java.util.Objects;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 
 public class CartProductDTO {
@@ -12,7 +13,8 @@ public class CartProductDTO {
 	@Valid
 	private ProductDTO product;
 	
-	private Integer productID;
+	@NotNull(message = "productId is required")
+	private Integer productId;
 	
 	
 	
@@ -48,18 +50,11 @@ public class CartProductDTO {
 	
 	@Override
 	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub
 		 if(this == obj) return true;
 		 if(obj == null  || this.getClass() != obj.getClass()) return false;
 		 
 		 CartProductDTO ctdto = (CartProductDTO)obj;
-		 
-		 if(this.getCartProductId().equals(ctdto.getCartProductId())) {
-			 return true;
-		 };
-		 
-		 return false;
-		 
+		 return Objects.equals(this.getCartProductId(), ctdto.getCartProductId());
 	}
 	
 	@Override
@@ -68,12 +63,12 @@ public class CartProductDTO {
 		return Objects.hash(this.getCartProductId());
 	}
 
-	public Integer getProductID() {
-		return productID;
+	public Integer getProductId() {
+		return productId;
 	}
 
-	public void setProductID(Integer productID) {
-		this.productID = productID;
+	public void setProductId(Integer productId) {
+		this.productId = productId;
 	}
 	
 	
