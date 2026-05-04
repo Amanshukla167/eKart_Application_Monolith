@@ -58,7 +58,7 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 						List<OrderedProductDTO>	orderedProductDTO = orderDTO.getOrderedProducts();
 						 
 						Order orderEntity = new Order();
-	
+	                    orderEntity.setCustomerEmaiId(orderDTO.getCustomerEmailId());
 						orderEntity.setDeliveryAddress(orderDTO.getDeliveryAddress());
 						orderEntity.setDateOfDelivery(orderDTO.getDateOfDelivery());
 						orderEntity.setDateOfOrder(orderDTO.getDateOfOrder());
