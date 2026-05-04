@@ -69,14 +69,14 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 						for(OrderedProductDTO dto : orderedProductDTO) {
 							if(dto != null) {
 								   OrderedProduct orderedProduct = new OrderedProduct();
-									orderedProduct.setOrderedProductId(dto.getOrderedProductId());
+//									orderedProduct.setOrderedProductId(dto.getOrderedProductId());
 									
-					     	        Optional<Product>foundProduct = productRepository.findById(dto.getProduct().getProductId());
+					     	        Optional<Product>foundProduct = productRepository.findById(dto.getProductId());
 					     	        
 									   Product product = foundProduct.orElseThrow(()-> new EKartException("product not found please use the diffrent product"));
 									  
 									 
-									   orderedProduct.setProductId(product.getProducstId());
+									   orderedProduct.setProductId(dto.getProductId());;
 									   
 					                   if(  dto.getQuantity() <= product.getAvailableQuantity()) {
 					                	   orderedProduct.setQuantity(dto.getQuantity());
