@@ -4,7 +4,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +19,7 @@ import com.ekart.DTO.CartProductDTO;
 import com.ekart.DTO.CustomerCartDTO;
 import com.ekart.exception.EKartException;
 import com.ekart.service.CustomerCartService;
-import com.ekart.service.CustomerCartServiceImpl;
+
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
@@ -34,7 +34,7 @@ public class CartAPI {
 		private CustomerCartService cartServiceImpl;
 		
 		@PostMapping(value = "/addProductCart")
-		ResponseEntity<String>addProductToCart(@Valid @RequestBody CustomerCartDTO cartDTO) throws EKartException{
+	    public ResponseEntity<String>addProductToCart(@Valid @RequestBody CustomerCartDTO cartDTO) throws EKartException{
 			
 	     	Integer custId  = cartServiceImpl.addProductToCart(cartDTO);
 			
@@ -44,7 +44,7 @@ public class CartAPI {
 		}
 		
 		@GetMapping(value = "/product/{customerEmailId}")
-		ResponseEntity<Set<CartProductDTO>>getProductsFromCart(@PathVariable String customerEmailId)throws EKartException{
+		public	ResponseEntity<Set<CartProductDTO>>getProductsFromCart(@PathVariable String customerEmailId)throws EKartException{
 			
 		    Set<CartProductDTO> cartprodut = cartServiceImpl.getProductsFromCart(customerEmailId);
 		    
