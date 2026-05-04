@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.hibernate.resource.transaction.spi.TransactionStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ekart.DTO.CardDTO;
 import com.ekart.DTO.TransactionDTO;
+import com.ekart.Enum.TransactionStatus;
 import com.ekart.entity.Card;
 import com.ekart.entity.Transaction;
 import com.ekart.exception.EKartException;
@@ -48,10 +48,10 @@ class PaymentServiceImpl implements PaymentService {
 		    	 Card card = new Card();
 		    	 card.setCardNumber(cardDTO.getCardNumber());
 	    		 card.setCardType(cardDTO.getCardType());
-	    		 card.setCvv(cardDTO.getHashCvv());
+	    		 card.setCvv(cardDTO.getCvv().toString());
 	    		 card.setExpiryDate(cardDTO.getExpiryDate());
 	    		 card.setNameOnCard(cardDTO.getNameOnCard());
-	    		 card.setCustomerEmailId(cardDTO.getCustomerEmailId());
+	    		 card.setCustomerEmailId(customerEmailId);
 	    		 cardRepository.save(card);
 	    		 CardID =  card.getCardID();
 		     
@@ -69,6 +69,7 @@ class PaymentServiceImpl implements PaymentService {
 	         
 	         transaction.setOrderID(transactionDTO.getOrder().getOrderId());
 	         transaction.setCardId(transactionDTO.getCard().getCardId());
+	       
 	         transaction.setStatus(TransactionStatus.valueOf(transactionDTO.getTransactionStatus().toString().toUpperCase()));
 	         transaction.setTotalPrice(transactionDTO.getTotalPrice());
 	         transaction.setTractionDate(transactionDTO.getTransactionDate());
@@ -99,6 +100,7 @@ class PaymentServiceImpl implements PaymentService {
 			     for(Card card :cardobj ) {
 			    	 if(card.getCardID().equals(cardId)) {
 			    		 cardRepository.delete(card);
+			    		break;
 			    	 }
 			     }
 	    	
@@ -210,7 +212,7 @@ class PaymentServiceImpl implements PaymentService {
 	        card.setCardNumber(cardDTO.getCardNumber());
 	        card.setCardType(cardDTO.getCardType());
 	        card.setCustomerEmailId(cardDTO.getCustomerEmailId());
-	        card.setCvv(cardDTO.getHashCvv());
+	        card.setCvv(cardDTO.getCvv().toString());
 	        card.setExpiryDate(cardDTO.getExpiryDate());
 	        card.setNameOnCard(cardDTO.getNameOnCard());
 	    	

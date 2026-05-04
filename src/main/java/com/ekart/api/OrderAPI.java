@@ -31,8 +31,8 @@ public class OrderAPI {
 	 @Autowired
 	 private CustomerOrderService customerOrderService;
 	 
-	 @Autowired
-	 private RestTemplate restTemplate;
+	 
+//	 private RestTemplate restTemplate;
 	 
 	 
 	 @PostMapping(value = "/placeOrder")
