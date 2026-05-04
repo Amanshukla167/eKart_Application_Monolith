@@ -10,12 +10,10 @@ public class TransactionDTO {
     
 	
 	private Integer transactionId;
+
+	private Integer  orderID;
 	
-	@Valid
-	private OrderDTO order;
-	
-	@Valid
-	private CardDTO card;
+	private Integer  cardID;
 	
 	private Double totalPrice;
 	
@@ -31,21 +29,7 @@ public class TransactionDTO {
 		this.transactionId = transactionId;
 	}
 
-	public OrderDTO getOrder() {
-		return order;
-	}
-
-	public void setOrder(OrderDTO order) {
-		this.order = order;
-	}
-
-	public CardDTO getCard() {
-		return card;
-	}
-
-	public void setCard(CardDTO card) {
-		this.card = card;
-	}
+	
 
 	public Double getTotalPrice() {
 		return totalPrice;
@@ -73,9 +57,25 @@ public class TransactionDTO {
 	
 	@Override
 	public String toString() {
-		return "TransactionDTO [transactionId=" + transactionId + ", order=" + order + ", card=" + card
+		return "TransactionDTO [transactionId=" + transactionId + ", order=" + orderID + ", card=" + cardID
 				+ ", totalPrice=" + totalPrice + ", transactionDate=" + transactionDate + ", transactionStatus="
 				+ transactionStatus + "]";
+	}
+
+	public Integer getOrderID() {
+		return orderID;
+	}
+
+	public void setOrderID(Integer orderID) {
+		this.orderID = orderID;
+	}
+
+	public Integer getCardID() {
+		return cardID;
+	}
+
+	public void setCardID(Integer cardID) {
+		this.cardID = cardID;
 	}
 	
 }

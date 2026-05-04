@@ -22,12 +22,9 @@ public class ProductDTO {
 	@Min(value = 10 , message = " the discount can not be less tha 10")
 	private Double discount;
 	
-	@Size(min = 3 , max = 10 , message = "PLease enter minimum 3 and mamximum 10")
+	@Min(value = 1, message = "Quantity should be not les than 1" )
+	@Max(value = 10, message = "Quantity can not be greater than the 10")
 	private Integer quantity;
-	
-	private String errorMessage;
-	
-	private String successMessage;
 	
 	private String sellerEmailId;
 	
@@ -97,21 +94,6 @@ public class ProductDTO {
 		this.quantity = quantity;
 	}
 
-	public String getErrorMessage() {
-		return errorMessage;
-	}
-
-	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
-	}
-
-	public String getSuccessMessage() {
-		return successMessage;
-	}
-
-	public void setSuccessMessage(String successMessage) {
-		this.successMessage = successMessage;
-	}
 
 	public String getSellerEmailId() {
 		return sellerEmailId;

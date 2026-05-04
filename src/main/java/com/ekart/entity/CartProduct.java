@@ -59,7 +59,7 @@ public class CartProduct {
 		
 		CartProduct otherobj = (CartProduct)obj;
 		
-		if(this.getProductId() == otherobj.getProductId()) {
+		if(this.getProductId().equals(otherobj.getCartProductId())) {
 			return true;
 		}
 		return false;
