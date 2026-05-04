@@ -67,8 +67,8 @@ class PaymentServiceImpl implements PaymentService {
 	    	 
 	         Transaction transaction = new Transaction();
 	         
-	         transaction.setOrderID(transactionDTO.getOrder().getOrderId());
-	         transaction.setCardId(transactionDTO.getCard().getCardId());
+	         transaction.setOrderID(transactionDTO.getOrderID());
+	         transaction.setCardId(transactionDTO.getCardID());
 	       
 	         transaction.setStatus(TransactionStatus.valueOf(transactionDTO.getTransactionStatus().toString().toUpperCase()));
 	         transaction.setTotalPrice(transactionDTO.getTotalPrice());

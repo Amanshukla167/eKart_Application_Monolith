@@ -50,7 +50,7 @@ public class CartProductDTO {
 		 
 		 CartProductDTO ctdto = (CartProductDTO)obj;
 		 
-		 if(this.getCartProductId() == ctdto.getCartProductId()) {
+		 if(this.getCartProductId().equals(ctdto.getCartProductId())) {
 			 return true;
 		 };
 		 

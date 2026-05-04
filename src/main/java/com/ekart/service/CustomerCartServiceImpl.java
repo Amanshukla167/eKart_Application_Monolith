@@ -58,7 +58,7 @@ public class CustomerCartServiceImpl implements CustomerCartService{
 	  			
 	         	Product productobjEntity = 	productrepo.orElseThrow(()-> new EKartException("this  product is not in the product cart"));
 	  			
-	  			cartProduct.setProductId(productobjEntity.getProducstId());
+	  			cartProduct.setProductId(productobjEntity.getproductId());
 	  			
 	  			cartProduct.setQuantity(cartProdDTO.getQuantity());
 	  			
@@ -90,7 +90,7 @@ public class CustomerCartServiceImpl implements CustomerCartService{
 	 		  			
 	 		         Product productobjEntity = 	productrepo.orElseThrow(()-> new EKartException("this  product is not in the product cart"));
 	 	    		 
-	 	    		 cartpod.setProductId(productobjEntity.getProducstId());
+	 	    		 cartpod.setProductId(productobjEntity.getproductId());
 	 	    		  
 	 	    		cartProductsSet2.add(cartpod);
 	 	    	     custcart.setCartProducts(cartProductsSet2);
@@ -137,7 +137,7 @@ public class CustomerCartServiceImpl implements CustomerCartService{
 		     prodDto.setPrice(proditem.getPrice());
 		     prodDto.setAvailableQuantity(proditem.getAvailableQuantity());
 		     prodDto.setDescription(proditem.getDescription());
-		     prodDto.setProductId(proditem.getProducstId());
+		     prodDto.setProductId(proditem.getproductId());
 		     
 		     cartProductDTO.setProduct(prodDto);
 		     

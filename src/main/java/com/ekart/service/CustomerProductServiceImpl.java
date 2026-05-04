@@ -40,7 +40,7 @@ public class CustomerProductServiceImpl implements CustomerProductService{
 		    		 dto.setCategory(prodformTable.getCategory());
 		    		 dto.setDescription(prodformTable.getDescription());
 		    		 dto.setAvailableQuantity(prodformTable.getAvailableQuantity());
-		    		 dto.setProductId(prodformTable.getProducstId());
+		    		 dto.setProductId(prodformTable.getproductId());
 		    		 dto.setPrice(prodformTable.getPrice());
 		    		 
 		    		 prodList.add(dto);
@@ -66,7 +66,7 @@ public class CustomerProductServiceImpl implements CustomerProductService{
 	    		 dto.setCategory(product.getCategory());
 	    		 dto.setDescription(product.getDescription());
 	    		 dto.setAvailableQuantity(product.getAvailableQuantity());
-	    		 dto.setProductId(product.getProducstId());
+	    		 dto.setProductId(product.getproductId());
 	    		 dto.setPrice(product.getPrice());
 		
 	              return dto;
